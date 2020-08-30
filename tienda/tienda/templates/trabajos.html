@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %} <title>Marmol | Trabajos </title>  {% endblock %}
+
+{% block content %}
+
+<section class="sec work" style="padding-top:200px;">
+    <div class="contenido" id="trabajos">
+        <div class="mxm800p" style="margin-top: 200px;">
+            <h3>Trabajos recientes</h3>
+            <p>MARMOLERIA ITALO CEDOLIN CIA LTDA , Es una empresa familiar que se inicia en Chile en 1948 cuando  Don Italo Cedolin de Monte, un artesano y artista italiano del mármol llega a Chile para realizar un emprendimiento mostrando las maravillas que se podían lograr  trabajado el mármol y la piedra, desde entonces trabajo en la sustracción, elaboración, y colocación de materiales pétreos nacionales e importados prestando servicios en el rubro de la construcción y decoración.
+                Al fallecimiento de don Italo le sucede su Hija doña Gabriela Cedolin quien ha heredado la tenacidad y creatividad de su padre  y que junto a su esposo don Pedro Indri  han logrado darle un impulso moderno y proactivo  a la empresa para satisfacer la demanda cada día mas exigente de sus Clientes.
+                
+            </p>
+        </div>
+        <div class="workBx">
+            {% for nuevos in nuevo %}
+           
+            {% if nuevos.estado %}
+            <div class="brand">
+                <div class="imgBx">
+                    <img src="{{nuevos.imagen.url}}" alt="" class="img2"></div>
+               <div class="contenido2">
+                <h2>{{nuevos.nombre}}</h2>
+               </div>
+               
+            </div>
+            {% endif %}
+           {%endfor%}
+        </div>
+    </div>
+  
+
+
+</section>
+
+{% endblock %}

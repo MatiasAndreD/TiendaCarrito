@@ -8,13 +8,6 @@ class User(AbstractUser):
     """Default user for Tienda."""
 
     #: First and last name do not cover name patterns around the globe
-    name = CharField(_("Name of User"), blank=True, max_length=255)
+    telefono = CharField(_("Telefono"), blank=True, max_length=9)
 
-    def get_absolute_url(self):
-        """Get url for user's detail view.
-
-        Returns:
-            str: URL for user detail.
-
-        """
-        return reverse("users:detail", kwargs={"username": self.username})
+    
