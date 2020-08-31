@@ -5,19 +5,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% block title %}  {% endblock %}
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
     <header id="header">
         <a href="#" class="logo">Marmol</a>
         <ul>
-            <li><a href="{% url 'Inicio' %}" onclick="toggle()">Inicio</a></li>
-            <li><a href="{% url 'Nosotros' %}" onclick="toggle()">Nosotros</a></li>
-            <li><a href="{% url 'Valores' %}" onclick="toggle()">Valores</a></li>
-            <li><a href="{% url 'Trabajos' %}" onclick="toggle()">Trabajos</a></li>
-            <li><a href="{% url 'Equipo' %}" onclick="toggle()">Equipo</a></li>
-            <li><a href="{% url 'Contacto' %}" onclick="toggle()">Contacto</a></li> 
-            <li><a href="{% url 'Tienda' %}" onclick="toggle()"><img src="{% static 'img/carrito.svg' %}" width="5%" alt="" style="filter: invert(1);"> Tienda</a></li>    
+            <li><a href="{% url 'inicio' %}" onclick="toggle()">Inicio</a></li>
+            <li><a href="{% url 'nosotros' %}" onclick="toggle()">Nosotros</a></li>
+            <li><a href="{% url 'valores' %}"onclick="toggle()">Valores</a></li>
+            <li><a href="{% url 'trabajos' %}" onclick="toggle()">Trabajos</a></li>
+            <li><a href="{% url 'equipo' %}" onclick="toggle()">Equipo</a></li>
+            <li><a href="{% url 'contacto' %}" onclick="toggle()">Contacto</a></li> 
+            <li><a href="{% url 'tienda' %}" onclick="toggle()"><img src="{% static 'images/carrito.svg' %}" width="12%" alt="" style="filter: invert(1);"> Tienda</a></li>    
 
         </ul>
         <div class="toggle" onclick="toggle()"></div>
@@ -29,9 +29,9 @@
     <div class="sci">
         <ul>
             <li>
-                <a href="#"><img src="{% static '/img/facebook.png' %}" alt=""></a>
-                <a href="#"><img src="{% static '/img/linkedin.png' %}" alt=""></a>
-                <a href="#"><img src="{% static '/img/twitter.png' %}" alt=""></a>
+                <a href="#"><img src="{% static '/images/facebook.png' %}" alt=""></a>
+                <a href="#"><img src="{% static '/images/linkedin.png' %}" alt=""></a>
+                <a href="#"><img src="{% static '/images/twitter.png' %}" alt=""></a>
             </li>
         </ul>
     </div>

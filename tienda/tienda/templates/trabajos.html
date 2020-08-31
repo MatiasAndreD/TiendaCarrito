@@ -14,14 +14,14 @@
             </p>
         </div>
         <div class="workBx">
-            {% for nuevos in nuevo %}
+           {% for trabajos in object_list %}
            
-            {% if nuevos.estado %}
+            {% if trabajos.estado %}
             <div class="brand">
                 <div class="imgBx">
-                    <img src="{{nuevos.imagen.url}}" alt="" class="img2"></div>
+                    <img src="{{trabajos.imagen.url}}" alt="" class="img2"></div>
                <div class="contenido2">
-                <h2>{{nuevos.nombre}}</h2>
+                <h2>{{trabajos.nombre}}</h2>
                </div>
                
             </div>

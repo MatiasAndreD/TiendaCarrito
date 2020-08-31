@@ -3,10 +3,16 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 from django.views import defaults as default_views
-
+from tienda.users.views import Indice,Nosotros,Valores,TrabajosR,Equipo,Contacto,Tienda
 
 urlpatterns = [
-   
+    path('',Indice.as_view(), name='inicio'),
+    path('nosotros', Nosotros.as_view(), name='nosotros'),
+    path('valores', Valores.as_view(), name='valores'),
+    path('trabajos', TrabajosR.as_view(), name="trabajos"),
+    path('equipo', Equipo.as_view(), name='equipo'),
+    path('contacto', Contacto.as_view(), name='contacto'),
+    path('listado_productos/',Tienda.as_view(),name='listado_productos'),
     path(settings.ADMIN_URL, admin.site.urls),
     # User management
     

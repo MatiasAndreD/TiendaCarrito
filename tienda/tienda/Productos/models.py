@@ -22,7 +22,7 @@ class Comentario(models.Model):
 class ImagenProducto(models.Model):
     descripcion = models.TextField(max_length=1000)
     producto = models.ForeignKey(Producto, related_name="producto_imagen",on_delete=models.CASCADE)
-    imagen = models.ImageField(upload_to='imagenes_productos')
+    imagen = models.ImageField(upload_to='imagenes_producto')
 
 
 class CarritoCompras(models.Model):

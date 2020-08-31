@@ -74,6 +74,7 @@ THIRD_PARTY_APPS = [
 LOCAL_APPS = [
     "tienda.users.apps.UsersConfig",
     "tienda.Productos",
+    "tienda.Trabajos",
     
     # Your stuff: custom apps go here
 ]
