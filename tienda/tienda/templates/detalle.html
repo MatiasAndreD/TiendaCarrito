@@ -11,8 +11,8 @@
 
   <!-- CSS  -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-  <link href="css/tienda.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="/static/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="/static/css/tienda.css" type="text/css" rel="stylesheet" media="screen,projection"/>
 
 </head>
 <body>
@@ -45,19 +45,23 @@
     <div class="container">
         <center>    
             <h1>
-                <span class="new badge" data-badge-caption="">4.00.00 $</span>
-                producto
+                <span class="new badge" data-badge-caption="">${{object.precio}}</span>
+                {{object.nombre}}
             </h1>
         </center>
 
         <div class="slider">
             <ul class="slides">
-                <li>
-                <img src="imagenes/imagen.jpeg"> <!-- random image -->
-                <div class="caption center-align">
-                    <h5 class="light grey-text text-lighten-3" >Here's our small slogan.</h5>
-                </div>
-                </li>
+                
+                    {% for imagen in object.producto_imagen.all %}
+                    <li>
+                    <img src="/media/{{imagen.imagen}}"> <!-- random image -->
+                     <div class="caption center-align">
+                    <h5 class="light grey-text text-lighten-3" >{{imagen.descripcion}}</h5>
+                    </div>
+                     </li>
+                    {% endfor %}
+                
 
             </ul>
             </div>
@@ -65,44 +69,66 @@
         <br>
         <div class="col s8 z-depth-1">
             <center>
-                descripción
+                {{object.descripcion}}
             </center>
         </div>
         <br>
 
         <ul class="collection">
-            <li class="collection-item">
-                <span class="title">mensaje</span>
-                <p>
-                    usuario -  fecha
-                </p>
-            </li>
+        
+            {% for comentario in object.producto_comentarios.all %}
+                <li class="collection-item">
+                    <p style="font-weight: bold;">{{comentario.usuario}}, dice: </p>
+                    <p>
+                        {{comentario.comentario}}
+                        <br>
+                        {{comentario.fecha}}
+                    </p>
+                </li>
+            {% endfor %}
         </ul>
 
-        <form class="col s12">
+        <form class="col s12" method="post" action="{% url 'crear_comentario' %}">
+            {% csrf_token %}
+            <div class="input-field col s6">
+                <input placeholder="Nombre" id="name" type="text" class="validate" name="usuario">
+                <label for="name">Nombre</label>
+            </div>
+    
+            <input type="hidden" name="producto" value="{{object.pk}}">
+    
             <div class="row">
                 <div class="input-field col s10">
                     <i class="material-icons prefix">mode_edit</i>
-                    <textarea id="icon_prefix2" class="materialize-textarea"></textarea>
+                    <textarea id="icon_prefix2" class="materialize-textarea" name="comentario"></textarea>
                     <label for="icon_prefix2">Comentario</label>
                 </div>
                 <div class="input-field col s2">
-                        <a class="waves-effect waves-light btn-large">
+                        <button class="waves-effect waves-light btn-large">
                             Comentar
-                        </a>
+                        </button>
                 </div>
             </div>
         </form>
 
     </div>
 
-    <div class="fixed-action-btn">
-        <a class="btn-floating btn-large red pulse">
+    
+    <div class="fixed-action-btn" style="bottom: 90px;">
+    <form action="{% url 'agregar' %}" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="usuario" value="{{request.user.pk}}">
+        <input type="hidden" name="producto" value="{{object.pk}}">
+        <input type="hidden" name="precio" value="{{object.precio}}">
+        
+        <button class="btn-floating btn-large red pulse">
             <i class="large material-icons">add_shopping_cart</i>
-        </a>
-        <ul>
-        </ul>
-    </div>
+        </button>
+    </form>
+    
+    <ul>
+    </ul>
+</div>
 
 
     <footer class="page-footer teal">
@@ -133,8 +159,8 @@
 
   <!--  Scripts-->
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-  <script src="js/materialize.js"></script>
-  <script src="js/init.js"></script>
+  <script src="/static/js/materialize.js"></script>
+  <script src="/static/js/init.js"></script>
 
   </body>
 </html>

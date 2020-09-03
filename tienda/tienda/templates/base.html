@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% block title %}  {% endblock %}
     <link rel="stylesheet" href="/static/css/style.css">
+    
+    {% block static %}
+    {% endblock %}
 </head>
 <body>
     <header id="header">
@@ -17,14 +20,29 @@
             <li><a href="{% url 'trabajos' %}" onclick="toggle()">Trabajos</a></li>
             <li><a href="{% url 'equipo' %}" onclick="toggle()">Equipo</a></li>
             <li><a href="{% url 'contacto' %}" onclick="toggle()">Contacto</a></li> 
-            <li><a href="{% url 'tienda' %}" onclick="toggle()"><img src="{% static 'images/carrito.svg' %}" width="12%" alt="" style="filter: invert(1);"> Tienda</a></li>    
-
+            <li><a href="{% url 'tienda' %}" onclick="toggle()"><img src="{% static 'images/carrito.svg' %}"  alt="" style="filter: invert(1); width: 15px;"> Tienda</a></li>    
+            {% if request.user.is_authenticated %}
+            <li><a href="{% url 'salir' %}" onclick="toggle()">Salir</a></li> 
+            {% else %}
+            <li><a href="{% url 'ingresar' %}" onclick="toggle()">Ingresar</a></li> 
+            {% endif %}
         </ul>
         <div class="toggle" onclick="toggle()"></div>
     </header>
 
     {% block content %}
     {% endblock %}
+
+      {% if request.user.is_authenticated %}
+      <div class="fixed-action-btn">
+        <a href="" class="btn-floating btn-large red pulse">
+          <i class="large material-icons">shopping_cart</i>
+        </a>
+        <ul>
+        </ul>
+      </div>
+  
+  {% endif %}
 <footer>
     <div class="sci">
         <ul>
@@ -37,6 +55,12 @@
     </div>
     <p class="copyright"> ©MARMOLORENZO</p>
 </footer>
+<!--  Scripts-->
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="/static/js/materialize.js"></script>
+<script src="/static/js/init.js"></script>
+
+<script src="/static/js/wNumb.js"></script>
 <script type="text/javascript">
 
 window.addEventListener("scroll",function(){

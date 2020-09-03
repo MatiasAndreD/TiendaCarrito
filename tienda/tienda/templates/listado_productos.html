@@ -1,210 +1,62 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>
-    
-    tienda
 
-  </title>
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} <title>Marmol | Tienda </title>  {% endblock %}
+{% block static %}
 
-  <!-- CSS  -->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link href="/static/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-  <link href="/static/tienda.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-  <link href="/static/nouislider.css" type="text/css" rel="stylesheet" media="screen,projection"/>
 
-</head>
-<body>
-  <nav class="white" role="navigation">
-    <div class="nav-wrapper container">
-      <a id="logo-container" href="#" class="brand-logo">Logo</a>
-      <ul class="right hide-on-med-and-down">
-            <li><a href="#">Productos</a></li>
-            <li><a href="#">Mi perfil</a></li>
-            <li><a href="#">Mis compras</a></li>
-      </ul>
+{% endblock %}
 
-      <ul id="nav-mobile" class="sidenav">
-        <li>
-            <a href="">
-                Logo
-            </a>
-        </li>
-        <li><a href="#">Productos</a></li>
-        <li><a href="#">Mi perfil</a></li>
-        <li><a href="#">Mis compras</a></li>
-      </ul>
-      <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+{% block content %}
 
+<section class="sec tienda" style="padding-top:200px;">
+  <div class="contenido" id="tienda">
+    <div class="mxm800p" style="margin-top: 200px;">
+    <h1 class="titulo">Tienda</h2>
     </div>
-  </nav>
 
- <div class="container">
   <br>
-  <center>
-    <h1>
-      Productos
-    </h1>
-  </center>
-
-  <div class="row">
-    <form action="{% url 'listado_productos' %}" class="col s12">
-
-        <div class="input-field col s6">
-          <i class="material-icons prefix">search</i>
-          <input name="nombre"  id="buscar" type="text" class="validate">
-          <label for="buscar">Nombre del producto</label>
-        </div>
-
-        <input type="hidden" name="minimo" id="minimo">
-        <input type="hidden" name="maximo" id="maximo">
-
-        <div class="col s6">
-          <label for="">Precio del producto</label>
-          <br><br>
-          <div id="test-slider"></div>
-        </div>
-        <div class="col s12">
-          <center>
-            <button class="waves-effect waves-light btn-large" type="submit">
-              Buscar
-            </button>
-          </center>
-        </div>
-
-    </form>
-  </div>
-
-  <div class="row">
-    
+  <div class="tiendaBx" style="max-width: 100%;">
     {% for producto in object_list %}
-      <div class="col s4">
-        <div class="card">
-          <div class="card-image">
-            <div style="width: 441px;
-            height: 305px;
-            background-image: url(/media/{{producto.producto_imagenes.all.0.imagen}});
-            background-size: cover;
-            background-repeat: no-repeat;
-            max-width: 100%;
-            width: 100%;"></div>
-          </div>
-          <div class="card-content">
-            <p>
-              {{producto.nombre}}
-            </p>
-          </div>
-          <div class="card-action">
-            <center>
-              <a href="" class="waves-effect waves-light btn btn-large">
-                ver
-              </a>
-            </center>
-          </div>
+    
+    <div class="contpro" style="background: #60D336; width: 250px; color:#000">
+     <a href="{% url 'detalle_producto' producto.pk %}"><div class="marca">
+         <div class="imgBx">
+             <img src="{{producto.producto_imagen.all.0.imagen.url}}" alt="" class="img2"></div>
+        <div class="cont">
+         <h2>{{producto.nombre}}</h2>
         </div>
-      </div>
+        
+     </div> </a>
+     <div class="detalle" >
+       Precio: <p style="font-weight: bold;">${{producto.precio}}</p>
+     </div>
+    </div>
     {% empty %}
-    <center>
-      <p>
-        No tenemos resultados para tu búsqueda
+   <div style="margin-left: -100px;"> 
+      <p style="text-align: center;">
+        No tenemos actualmente productos en stock
       </p>
-    </center>
+    </div>
     {% endfor %}
-      
-      
-
-
+ </div>
+    
   </div>
-
-  <div class="row">
-		{% if is_paginated %}
-		<center>
-			<ul class="pagination">
-				{% if page_obj.has_previous %}
-				<li class="disabled"><a href="?page={{ page_obj.previous_page_number }}"><i class="material-icons">chevron_left</i></a></li>
-				{% else %}
-				<li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
-				{% endif %}
-
-				{% for page in paginator.page_range %}
-				<li class="waves-effect  {% if page == page_obj.number %}active{% endif %}"><a href="?page={{ page }}">{{ page }}</a></li>
-				{% endfor %}
+</section>
 
 
-				{% if page_obj.has_next %}
-				<li class="waves-effect"><a href="?page={{ page_obj.next_page_number }}"><i class="material-icons">chevron_right</i></a></li>
-				{% else %}
-				<li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
-				{% endif %}
-			</ul>
-		</center>
-		{% endif %}
 
-	</div>
-
+</div>
 
   <br>
 </div>
 
 
-<script src="/static/js/nouislider.min.js"></script>
-<script src="/static/js/wNumb.js"></script>
-<script>
-  $(document).ready(function(){
-    var slider = document.getElementById('test-slider');
-    noUiSlider.create(slider, {
-      start: [{{minimo}}, {{maximo}}],
-      connect: true,
-      step: 1,
-      orientation: 'horizontal', // 'horizontal' or 'vertical'
-      range: {
-        'min': 0,
-        'max': 100
-      },
-      format: wNumb({
-        decimals: 0
-      })
-    });
-    // evento para cuando cambiamos el slider
-    $('#test-slider')[0].noUiSlider.on('change',function(v,handle){
-      $("#minimo").val(v[0])
-      $("#maximo").val(v[1])
-    });
-  })
-</script>
-
-  <footer class="page-footer teal">
-    <div class="container">
-      <div class="row">
-
-        <div class="col l12 s12">
-          <h5 class="white-text">Somos los mejores!</h5>
-          <p class="grey-text text-lighten-4">
-              Enviamos a todo el país
-          </p>
-
-        </div>
-
-      </div>
-    </div>
-
-    <div class="footer-copyright">
-      <div class="container">
-          <center>
-                Todos los derechos reservados 2019
-          </center>
-      </div>
-    </div>
-  </footer>
 
 
-  <!--  Scripts-->
-  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-  <script src="/static/js/materialize.js"></script>
-  <script src="/static/js/init.js"></script>
 
 
-  </body>
-</html>
+
+{% endblock %}
+
+  

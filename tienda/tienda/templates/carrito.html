@@ -11,13 +11,13 @@
 
   <!-- CSS  -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-  <link href="css/tienda.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="static/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="static/css/tienda.css" type="text/css" rel="stylesheet" media="screen,projection"/>
 
 </head>
 <body>
   <nav class="white" role="navigation">
-    <div class="nav-wrapper container">
+    <div class="nav-wrapper container" style="">
       <a id="logo-container" href="#" class="brand-logo">Logo</a>
       <ul class="right hide-on-med-and-down">
             <li><a href="#">Productos</a></li>
@@ -41,44 +41,100 @@
   </nav>
 
   <div class="container">   
-    <br>
-    <div class="row">
-      <div class="col s12">
-        <ul class="tabs">
-          <li class="tab col s4"><a href="#carrito_compras">Mi carrito de compras</a></li>
-          <li class="tab col s4"><a href="#carrito_pendientes">Mis compras pendientes</a></li>
-          <li class="tab col s4"><a href="#carrito_finalizadas">Mis compras realizadas</a></li>
-        </ul>
-      </div>
-      <div id="carrito_compras" class="col s12">
+  <br>
+  <div class="row">
+    <div class="col s12">
+      <ul class="tabs">
+        <li class="tab col s4"><a 
+
+          {% if tab == 'sincomprar' %}
+            class="active"
+            href="#carrito-{{tab}}" 
+          {% else %}
+          href="#carrito" 
+          {% endif %}
+
+          onclick="location.href='{% url 'listar_carrito' %}'">Mi carrito de compras</a></li>
         
+          <li class="tab col s4"><a 
 
-          <ul class="collection with-header">
-            <li class="collection-header">
-              <center>
-                <h1>
-                  Mi carrito de compras 
-                </h1>
-                <h2>
-                  Total: 10$
-                </h2>
-              </center>
-            </li>
+          {% if tab == 'pendientes' %}
+            class="active"
+            href="#carrito-{{tab}}" 
+          {% else %}
+          href="#carrito" 
+          {% endif %}
 
+          onclick="location.href='{% url 'listar_pendientes' %}'">Mis compras pendientes</a></li>
+        
+          <li class="tab col s4"><a 
+
+          {% if tab == 'finalizadas' %}
+            class="active"
+            href="#carrito-{{tab}}" 
+          {% else %}
+          href="#carrito" 
+          {% endif %}
+
+          onclick="location.href='{% url 'listar_finalizado' %}'">Mis compras realizadas</a></li>
+      </ul>
+    </div>
+    <div id="carrito-{{tab}}" class="col s12">
+      
+
+        <ul class="collection with-header">
+            {% if tab == 'sincomprar' %}
+              <li class="collection-header">
+                <center>
+                  <h1>
+                    Mi carrito de compras 
+                  </h1>
+                  <h2 id="total">
+                    Total: 0$
+                  </h2>
+                </center>
+              </li>
+            {% endif %}
+
+          
+          {% for carrito in object_list %}
             <li class="collection-item">
               <div>
-                nombre del productos
-                <a href="#!" class="secondary-content">
-                  <i class="material-icons">delete</i>
-                </a>
+                {{carrito.producto.nombre}} - {{carrito.precio}} $
+                {% if tab == 'sincomprar' %}
+                  <form method="post" action="{% url 'eliminar_carrito' carrito.pk %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn secondary-content">
+                      <i class="material-icons">delete</i>
+                    </button>
+                  </form>
+                {% endif %}
+                <br>
               </div>
             </li>
+          {% empty %}
+            <li class="collection-item">
+              <div>
+                <center>
+                    No tienes productos en tu carrito
+                </center>
+              </div>
+            </li>
+          {% endfor %}
 
-          </ul>
+        </ul>
 
-      </div>
+        {% if tab == 'sincomprar' %}
+          <br>
+          <center>
+              <a href="" class="waves-effect waves-light btn-large">Pagar</a>
+          </center>
+        {% endif %}
+        
+
     </div>
   </div>
+</div>
 
   
 
@@ -110,8 +166,8 @@
 
   <!--  Scripts-->
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-  <script src="js/materialize.js"></script>
-  <script src="js/init.js"></script>
+  <script src="static/js/materialize.js"></script>
+  <script src="static/js/init.js"></script>
 
   </body>
 </html>

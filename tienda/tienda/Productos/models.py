@@ -31,7 +31,17 @@ class CarritoCompras(models.Model):
     precio = models.IntegerField()
     direccion = models.CharField( max_length=300)
     datos_payu = models.CharField( max_length=600)
+    comprado = models.BooleanField(default = False)
+    pendiente =  models.BooleanField(default = False)
 
     def __str__(self):
-      return self.producto
+      return "Usuario:{}, producto:{}".format(self.usuario, self.producto)
+
+
+
+    
+      
+
+
+  
 
