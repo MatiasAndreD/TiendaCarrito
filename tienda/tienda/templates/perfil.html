@@ -1,94 +1,98 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>
-    
-    tienda
 
-  </title>
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} <title>Marmol | Tienda </title>  {% endblock %}
 
-  <!-- CSS  -->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link href="static/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-  <link href="static/css/tienda.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+{% block static %}
+<link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" type="text/css" href="static/css/perfil.css">
 
-</head>
-<body>
-  <nav class="white" role="navigation">
-    <div class="nav-wrapper container">
-      <a id="logo-container" href="#" class="brand-logo">Logo</a>
-      <ul class="right hide-on-med-and-down">
-            <li><a href="#">Productos</a></li>
-            <li><a href="#">Mi perfil</a></li>
-            <li><a href="#">Mis compras</a></li>
-      </ul>
 
-      <ul id="nav-mobile" class="sidenav">
-        <li>
-            <a href="">
-                Logo
-            </a>
-        </li>
-        <li><a href="#">Productos</a></li>
-        <li><a href="#">Mi perfil</a></li>
-        <li><a href="#">Mis compras</a></li>
-      </ul>
-      <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+{% endblock %}
 
-    </div>
-  </nav>
+{% block content %}
 
-  <div class="container">
-    <form action="{% url 'cambiar_perfil' %}" method="POST" class="col s12">
-      {% csrf_token %}
-      <div class="input-field col s12">
-        <input id="nombre" type="text" class="validate" name="first_name" value="{{object.first_name|default_if_none:""}}">
-        <label for="nombre">Nombre(s)</label>
-      </div>
+<div class="containerf">
+	<div class="contact-box">
+		<div class="left"></div>
+		<div class="right">
+      <button class="btnedit" onclick="habilitar()"><i class="fas fa-edit" alt="Editar"><p>Editar</p></i></button>
+      <br>
+      <br>
+			<h2 style="text-transform: uppercase; letter-spacing: 1px;">Perfil</h2>
+			<form action="{% url 'cambiar_perfil' %}" method="POST">
+				{% csrf_token %}
+			<h5 style="text-align: left; text-transform: uppercase; letter-spacing: 1px;">Nombre</h5>
+			<input type="text" class="field" id="i1" name="first_name" disabled value="{{object.first_name|default_if_none:''}}" placeholder="Nombre">
+			<h5 style="text-align: left; text-transform: uppercase; letter-spacing: 1px;">Apellido</h5>
+			<input type="text" class="field" id="i2" name="last_name" disabled value="{{object.last_name|default_if_none:''}}" placeholder="Apellido">
+			<h5 style="text-align: left; text-transform: uppercase; letter-spacing: 1px;">Telefono</h5>
+			<input type="text" class="field" id="i3" name="telefono" disabled value="{{object.telefono|default_if_none:''}}" placeholder="">
+			<h5 style="text-align: left; text-transform: uppercase; letter-spacing: 1px;">Email</h5>
+			<input type="text" placeholder="Email" id="i4" name="email" disabled value="{{object.email|default_if_none:''}}" class="field">
+			<h5 style="text-align: left; text-transform: uppercase; letter-spacing: 1px;">Nombre de usuario</h5>
+			<input type="text" placeholder="" disabled value="{{object.username|default_if_none:''}}" class="field">
+			<button class="btn" id="cmb">Cambiar perfil</button>
+      </form>
+      
+		</div>
+	</div>
+</div>
 
-      <div class="input-field col s12">
-        <input id="apellidos" type="text" class="validate" name="last_name" value="{{object.last_name|default_if_none:""}}">
-        <label for="apellidos">Apellidos</label>
-      </div>
+<script>
+	function habilitar() {	
+$("#i1").prop('disabled', false);
+$("#i2").prop('disabled', false);
+$("#i3").prop('disabled', false);
+$("#i4").prop('disabled', false);
+$("#cmb").show();
 
-      <div class="input-field col s12">
-        <input id="correo" type="email" class="validate" name="email" value="{{object.email|default_if_none:""}}">
-        <label for="correo">Correo electrónico</label>
-      </div>
+toastr.info('Ya puedes modificar tu perfil',toastr.options = {
+  "closeButton": false,
+  "debug": false,
+  "newestOnTop": false,
+  "progressBar": false,
+  "positionClass": "toast-bottom-right",
+  "preventDuplicates": false,
+  "onclick": null,
+  "showDuration": "300",
+  "hideDuration": "1000",
+  "timeOut": "5000",
+  "extendedTimeOut": "1000",
+  "showEasing": "swing",
+  "hideEasing": "linear",
+  "showMethod": "fadeIn",
+  "hideMethod": "fadeOut"
+})
+}
 
-      <div class="input-field col s12">
-        <input id="telefono" type="tel" class="validate" name="telefono" value="{{object.telefono|default_if_none:""}}">
-        <label for="telefono">Teléfono</label>
-      </div>
-      <div class="input-field col s12">
-        <input id="username" type="email" class="validate" name="username" value="{{object.username|default_if_none:""}}">
-        <label for="username">Nombre de usuario</label>
-      </div>
+function cambiado(){
+  toastr.info('Tu perfil fue modificado',toastr.options = {
+  "closeButton": false,
+  "debug": false,
+  "newestOnTop": false,
+  "progressBar": false,
+  "positionClass": "toast-bottom-right",
+  "preventDuplicates": false,
+  "onclick": null,
+  "showDuration": "300",
+  "hideDuration": "1000",
+  "timeOut": "5000",
+  "extendedTimeOut": "1000",
+  "showEasing": "swing",
+  "hideEasing": "linear",
+  "showMethod": "fadeIn",
+  "hideMethod": "fadeOut"
+})
+}
 
-      <center>
-        <button class="waves-effect waves-light btn-large" type="submit">
-          Guardar
-        </button>
-      </center>
+	</script>
 
-    </form>
-    <br>
-  </div>
-
-    <div class="footer-copyright">
-      <div class="container">
-          <center>
-                Todos los derechos reservados 2019
-          </center>
-      </div>
-    </div>
-  </footer>
-
+{% endblock %}
 
   <!--  Scripts-->
-  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+
   <script src="static/js/materialize.js"></script>
   <script src="static/js/init.js"></script>
 

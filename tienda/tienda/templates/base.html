@@ -6,6 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% block title %}  {% endblock %}
     <link rel="stylesheet" href="/static/css/style.css">
+    <script src="https://kit.fontawesome.com/a81368914c.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     
     {% block static %}
     {% endblock %}
@@ -20,11 +24,14 @@
             <li><a href="{% url 'trabajos' %}" onclick="toggle()">Trabajos</a></li>
             <li><a href="{% url 'equipo' %}" onclick="toggle()">Equipo</a></li>
             <li><a href="{% url 'contacto' %}" onclick="toggle()">Contacto</a></li> 
-            <li><a href="{% url 'tienda' %}" onclick="toggle()"><img src="{% static 'images/carrito.svg' %}"  alt="" style="filter: invert(1); width: 15px;"> Tienda</a></li>    
+            <li><a href="{% url 'tienda' %}" onclick="toggle()">Tienda</a></li>    
+                
             {% if request.user.is_authenticated %}
-            <li><a href="{% url 'salir' %}" onclick="toggle()">Salir</a></li> 
+            <li style="font-size: 13px;"><a href="{% url 'listar_carrito' %}"><img src="{% static 'images/carrito.svg' %}"  alt="Mis compras" style="filter: invert(1); width: 18px;"> </a></li>
+            <li style="font-size: 13px;"><a href="{% url 'cambiar_perfil' %}"><img src="{% static 'images/perfil.svg' %}"  alt="Mi perfil" style="filter: invert(1); width: 18px;"></a></li>
+            <li><a href="{% url 'salir' %}" onclick="toggle()"><img src="{% static 'images/salir.svg' %}"  alt="Cerrar sesión" style="filter: invert(1); width: 18px;"> </a></li> 
             {% else %}
-            <li><a href="{% url 'ingresar' %}" onclick="toggle()">Ingresar</a></li> 
+            <li><a href="{% url 'ingresar' %}" onclick="toggle()"><img src="{% static 'images/login.svg' %}"  alt="Iniciar sesión" style="filter: invert(1); width: 15px;">  Ingresar</a></li> 
             {% endif %}
         </ul>
         <div class="toggle" onclick="toggle()"></div>
@@ -35,8 +42,8 @@
 
       {% if request.user.is_authenticated %}
       <div class="fixed-action-btn">
-        <a href="" class="btn-floating btn-large red pulse">
-          <i class="large material-icons">shopping_cart</i>
+        <a href="{% url 'listar_carrito' %}" class="btn-floating btn-large green pulse">
+            <i class="fas fa-shopping-cart" style="font-size: 25px;"></i>
         </a>
         <ul>
         </ul>

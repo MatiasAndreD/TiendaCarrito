@@ -114,8 +114,8 @@ class Ingresar(LoginView):
 
 class CambiarPerfil(LoginRequiredMixin, UpdateView):
     model = User
-    fields = ('telefono','last_name','first_name','email','username')
-    success_url ='/'
+    fields = ('telefono','last_name','first_name','email',)
+    success_url ='cambiar_perfil'
     template_name = 'perfil.html'
 
     def get_object(self,queryset=None):
